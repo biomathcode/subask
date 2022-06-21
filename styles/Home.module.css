@@ -3,7 +3,7 @@
 }
 
 .main {
-  min-height: 100vh;
+  min-height: calc(100vh - 50px);
   padding: 4rem 0;
   flex: 1;
   display: flex;
@@ -14,8 +14,9 @@
 
 .footer {
   display: flex;
+  height: 50px;
   flex: 1;
-  padding: 2rem 0;
+
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
@@ -42,7 +43,7 @@
 .title {
   margin: 0;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 2rem;
 }
 
 .title,
