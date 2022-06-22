@@ -62,7 +62,7 @@ model VerificationToken {
 
 model Ask {
   id       String   @id @default(cuid())
-  content  String
+  content  String   @db.Text
   author   User     @relation(fields: [authorId], references: [id])
   authorId String
   tags     Tag[]    @relation(references: [id])

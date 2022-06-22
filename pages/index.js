@@ -2,9 +2,15 @@ import Head from "next/head";
 
 import styles from "../styles/Home.module.css";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Gist from "react-gist";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { data: session } = useSession();
+
+  const [lib, setLib] = useState();
+
+  console.log(lib);
 
   return (
     <div className={styles.container}>
@@ -16,11 +22,12 @@ export default function Home() {
 
       <main className={styles.main}>
         <h3 className={styles.title}>Linode hackathon boilerplate</h3>
-
+        <Gist id="5995ea726914f280afb3" file="Chef-Dockerfile" />
         {session ? (
           <>
             <p>
               Signed in as {session.user.email} <br />
+              {/* <Gist id="5995ea726914f280afb3" file="Chef-Dockerfile" />, */}
             </p>
             <img
               width="50px"
@@ -32,7 +39,10 @@ export default function Home() {
           </>
         ) : (
           <>
-            Not signed in <br />
+            <p>
+              Not signed in <br />
+            </p>
+            {/* <Gist id="5995ea726914f280afb3" />, */}
             <button onClick={() => signIn()}>Sign in</button>
           </>
         )}
