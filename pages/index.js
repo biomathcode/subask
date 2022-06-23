@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Gist from "react-gist";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -22,7 +23,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h3 className={styles.title}>Linode hackathon boilerplate</h3>
-        <Gist id="5995ea726914f280afb3" file="Chef-Dockerfile" />
+
         {session ? (
           <>
             <p>
@@ -36,6 +37,9 @@ export default function Home() {
               alt="profile pic"
             />
             <button onClick={() => signOut()}>Sign out</button>
+            <Link href="/ask">
+              <p>Ask</p>
+            </Link>
           </>
         ) : (
           <>

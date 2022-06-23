@@ -8,6 +8,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "react-query";
+import Navbar from "../components/Navbar";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
+        <Navbar />
         <Component {...pageProps} />
       </QueryClientProvider>
     </SessionProvider>

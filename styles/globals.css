@@ -14,3 +14,30 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.flex {
+  display: flex;
+  gap: 10px;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.center {
+  align-content: center;
+  align-items: center;
+}
+
+.container {
+  padding: 0px 10px;
+}
+
+.jc {
+  justify-content: center;
+}
+
+.main {
+  max-width: 600px;
+  height: 100vh;
+}
