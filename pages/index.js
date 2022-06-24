@@ -51,16 +51,6 @@ export default function Home() {
           </>
         )}
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://github.com/biomathcode/boilerplate"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Git clone me{" "}
-        </a>
-      </footer>
     </div>
   );
 }

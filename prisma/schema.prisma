@@ -50,6 +50,7 @@ model User {
   sessions      Session[]
   asks          Ask[]
 
+  Answer Answer[]
 }
 
 model VerificationToken {
@@ -67,15 +68,15 @@ model Ask {
   authorId String
   tags     Tag[]    @relation(references: [id])
   answers  Answer[]
-
 }
 
 model Answer {
-  id     String @id @default(cuid())
-  gistId String @unique
-  askid  String
-  author Ask    @relation(fields: [askid], references: [id])
-
+  id        String @id @default(cuid())
+  gistId    String @unique
+  askid     String
+  createdBy Ask    @relation(fields: [askid], references: [id])
+  author    User   @relation(fields: [authorId], references: [id])
+  authorId  String
 }
 
 model Tag {

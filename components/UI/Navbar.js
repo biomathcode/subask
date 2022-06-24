@@ -11,7 +11,8 @@ const Container = styled("nav", {
   alignItems: "center",
   alignContent: "center",
   height: "50px",
-  maxWidth: "100vw",
+  width: "100vw",
+  position: "fixed",
 });
 
 const Item = styled("div", {

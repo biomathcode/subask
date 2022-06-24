@@ -41,3 +41,11 @@ a {
   max-width: 600px;
   height: 100vh;
 }
+
+.m-10 {
+  margin: 10px;
+}
+
+.mt-10 {
+  margin: 10px;
+}

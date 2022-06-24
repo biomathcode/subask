@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Head from "next/head";
-import AskComponent from "../components/Ask";
+import AskComponent from "../components/Forms/Ask";
+import { Loader } from "../components/Icons";
 
 function Ask() {
   const [data, setData] = useState();
@@ -22,7 +23,7 @@ function Ask() {
       <main className="main  center">
         <AskComponent />
 
-        {data &&
+        {data ? (
           data.map((el) => {
             return (
               <div key={el.id}>
@@ -43,7 +44,10 @@ function Ask() {
                 })}
               </div>
             );
-          })}
+          })
+        ) : (
+          <Loader />
+        )}
       </main>
     </div>
   );

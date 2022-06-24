@@ -8,7 +8,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "react-query";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/UI/Navbar";
 
 const queryClient = new QueryClient();
 

@@ -1,4 +1,4 @@
-import GistComponent from "../components/Gist";
+import GistComponent from "../components/Scrolls/Gist";
 
 function Gists() {
   return <GistComponent />;
