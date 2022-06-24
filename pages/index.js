@@ -8,6 +8,7 @@ import axios from "axios";
 
 import { formatDistance } from "date-fns";
 import DialogDemo from "../components/UI/Dialogs";
+import Link from "next/link";
 
 export default function Home() {
   const [newdata, setData] = useState();
@@ -81,14 +82,17 @@ export default function Home() {
                   }}
                   key={el.id}
                 >
-                  <p
-                    style={{
-                      fontSize: "1.30769231rem",
-                      color: "var(--text-color)",
-                    }}
-                  >
-                    {el.content}
-                  </p>
+                  <Link href={"/ask/" + el.id}>
+                    <p
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "1.30769231rem",
+                        color: "var(--text-color)",
+                      }}
+                    >
+                      {el.content}
+                    </p>
+                  </Link>
 
                   <div className="flex center">
                     <img
@@ -103,7 +107,7 @@ export default function Home() {
                   </div>
                   <div className="flex js">
                     <div className="flex center">
-                      <DialogDemo askid={el.id} authorId={session.user.id} />
+                      <DialogDemo askid={el.id} authorId={session?.user.id} />
                       {/* <button className="btn rosund">Answer </button> */}
                     </div>
                     <div className="flex center">

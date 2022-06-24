@@ -2,17 +2,24 @@
 
 import prisma from "../../../lib/prisma";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   const { id } = req.query;
 
-  console.log(id);
   switch (req.method) {
     case "GET":
-      const getAsk = prisma.ask.delete({
+      const getAsk = await prisma.ask.findFirst({
         where: {
           id: id,
         },
+        select: {
+          answers: true,
+          content: true,
+          id: true,
+          author: true,
+          createdAt: true,
+        },
       });
+      console.log(getAsk);
       return res.status(200).json({ data: getAsk });
     case "PUT":
       return res.status(200).json({ data: `Update response  ${id}` });

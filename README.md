@@ -6,5 +6,8 @@ Features
 - Any one can answer a question as long as the gist id provided is unique
 - 
 TODO
-[ ] Login to ask question
-[ ] 
+[ ] Work on Authentication flow
+[ ] Make Profile Page
+[ ] Ask pages with Blog 
+
+- The Master-Detail Pattern is used to display 

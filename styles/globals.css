@@ -98,7 +98,7 @@ a {
 
 .main {
   max-width: 600px;
-  height: calc(100vh -var(--header-size));
+  height: calc(100vh - var(--header-size));
   padding-top: var(--header-size);
 }
 
@@ -124,7 +124,7 @@ a {
   font-size: 14px;
   font-weight: 500;
   padding: 5px 10px;
-  display: inline-block;
+  display: flex;
   line-height: 20px;
   white-space: nowrap;
   vertical-align: middle;
