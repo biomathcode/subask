@@ -10,17 +10,15 @@ function GistComponent() {
   const [gists, setGists] = useState();
 
   useEffect(() => {
-    if (session) {
-      const fetchData = async () => {
-        const result = await axios.get("/api/gists");
+    const fetchData = async () => {
+      const result = await axios.get("/api/gists");
 
-        console.log(result.data.data);
+      console.log(result.data.data);
 
-        setGists(result.data.data.data);
-      };
-      fetchData();
-    }
-  }, [session]);
+      setGists(result.data.data.data);
+    };
+    fetchData();
+  }, []);
 
   return (
     gists && (

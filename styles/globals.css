@@ -15,6 +15,61 @@ a {
   box-sizing: border-box;
 }
 
+:root {
+  --header-height: 50px;
+  --footer-height: 60px;
+
+  --header-size: 60px;
+  --nav-background: #fafafa;
+
+  --primary: #fff;
+  --primary-2: #f1f3f5;
+  --secondary: #000;
+  --secondary-2: #111;
+  --selection: var(--cyan);
+  --text-base: #000;
+  --text-primary: #000;
+  --text-secondary: #fff;
+  --hover: rgba(0, 0, 0, 0.075);
+  --hover-1: rgba(0, 0, 0, 0.15);
+  --hover-2: rgba(0, 0, 0, 0.25);
+  --cyan: #22b8cf;
+  --green: #62d198;
+  --green-dark: #3bb174;
+  --green-light: #aaf0cc;
+  --red: #f13154;
+  --red-dark: #c91737;
+  --red-light: #fdcad3;
+  --purple: #f81ce5;
+  --blue: #0052cd;
+  --blue-light: #3787ff;
+  --blue-dark: #3787ff;
+  --purple: #4e00cd;
+  --purple-light: #9c73df;
+  --purple-dark: #310082;
+  --pink: #ff0080;
+  --pink-light: #ff379c;
+  --orange: #ff9a23;
+  --lightOrange: rgba(255, 154, 35, 0.2);
+  --orange-dark: #ed7200;
+  --yellow: #ff0;
+  --magenta: #eb367f;
+  --violet: #7928ca;
+  --violet-dark: #4c2889;
+  --accent-0: #fff;
+  --accent-1: #fafafa;
+  --accent-2: #eaeaea;
+  --accent-3: #999;
+  --accent-4: #888;
+  --accent-5: #666;
+  --accent-6: #444;
+  --accent-7: #333;
+  --accent-8: #111;
+  --accent-9: #000;
+  --font-sans: -apple-system, system-ui, BlinkMacSystemFont, "Helvetica Neue",
+    "Helvetica", sans-serif;
+}
+
 .flex {
   display: flex;
   gap: 10px;
@@ -37,9 +92,14 @@ a {
   justify-content: center;
 }
 
+.js {
+  justify-content: space-between;
+}
+
 .main {
   max-width: 600px;
-  height: 100vh;
+  height: calc(100vh -var(--header-size));
+  padding-top: var(--header-size);
 }
 
 .m-10 {
@@ -48,4 +108,65 @@ a {
 
 .mt-10 {
   margin: 10px;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.round {
+  border-radius: 3px;
+}
+
+.btn {
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 5px 10px;
+  display: inline-block;
+  line-height: 20px;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  height: fit-content;
+
+  color: var(--text-secondary);
+  background-color: #25292f;
+  border: none;
+}
+
+.tag {
+  background-color: #25292f;
+  color: #eee;
+  padding: 5px 10px;
+  text-align: center;
+  border-radius: 3px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.scroll-container {
+  width: 100%;
+  height: 50px;
+
+  overflow: hidden;
+}
+
+.h-scroll {
+  overflow-x: scroll;
+  width: 100%;
+  height: 100%;
+
+  padding-right: 100px;
+  padding-left: 10px; /* Increase/decrease this value for cross-browser compatibility */
+  align-items: center;
+  box-sizing: content-box;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.h-scroll::-webkit-scrollbar {
+  display: none;
 }

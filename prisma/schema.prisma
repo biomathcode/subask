@@ -62,8 +62,10 @@ model VerificationToken {
 }
 
 model Ask {
-  id       String   @id @default(cuid())
-  content  String   @db.Text
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
   author   User     @relation(fields: [authorId], references: [id])
   authorId String
   tags     Tag[]    @relation(references: [id])
@@ -71,11 +73,14 @@ model Ask {
 }
 
 model Answer {
-  id        String @id @default(cuid())
-  gistId    String @unique
+  id        String   @id @default(cuid())
+  gistId    String   @unique
+  gistFile  String
   askid     String
-  createdBy Ask    @relation(fields: [askid], references: [id])
-  author    User   @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  answerTo  Ask      @relation(fields: [askid], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
   authorId  String
 }
 

@@ -13,6 +13,8 @@ const Container = styled("nav", {
   height: "50px",
   width: "100vw",
   position: "fixed",
+  background: "#fff",
+  zIndex: 1000,
 });
 
 const Item = styled("div", {
@@ -24,25 +26,29 @@ const Item = styled("div", {
 const Navbar = () => {
   const { data: session } = useSession();
   return (
-    <Container>
-      <Link href="/">
-        <Item>subask.in</Item>
-      </Link>
-      {session ? (
-        <div className="flex center ">
-          <img
-            width="40px"
-            height="40px"
-            style={{ borderRadius: "50%" }}
-            src={session.user.image}
-            alt={session.user.email}
-          />
-          <p>{session.user.name}</p>
-        </div>
-      ) : (
-        <Item onClick={() => signIn("github")}>Login </Item>
-      )}
-    </Container>
+    <>
+      <Container>
+        <Link href="/">
+          <Item>subask.in</Item>
+        </Link>
+        {session ? (
+          <Link href="/profile">
+            <div className="flex center ">
+              <img
+                width="40px"
+                height="40px"
+                style={{ borderRadius: "50%" }}
+                src={session.user.image}
+                alt={session.user.email}
+              />
+              <p>{session.user.name}</p>
+            </div>
+          </Link>
+        ) : (
+          <Item onClick={() => signIn("github")}>Login </Item>
+        )}
+      </Container>
+    </>
   );
 };
 

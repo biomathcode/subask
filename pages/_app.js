@@ -9,6 +9,7 @@ import {
   QueryClientProvider,
 } from "react-query";
 import Navbar from "../components/UI/Navbar";
+import AskButton from "../components/UI/AskButton";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ export default function App({
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
         <Navbar />
+        <AskButton />
         <Component {...pageProps} />
       </QueryClientProvider>
     </SessionProvider>

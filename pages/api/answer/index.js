@@ -1,12 +1,25 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import prisma from "../../../lib/prisma";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   switch (req.method) {
     case "GET":
       return res.status(200).json({ data: "Get the data" });
     case "POST":
-      return res.status(200).json({ data: "Post request " });
+      const gistId = req.body.gistId;
+      const gistFile = req.body.gistFile;
+      const askid = req.body.askid;
+      const authorId = req.body.authorId;
+      const response = await prisma.answer.create({
+        data: {
+          gistId: gistId,
+          gistFile: gistFile,
+          askid: askid,
+
+          authorId: authorId,
+        },
+      });
+      return res.status(200).json({ data: response });
     case "PUT":
       return res.status(200).json({ data: "Update response" });
     case "DELETE":
