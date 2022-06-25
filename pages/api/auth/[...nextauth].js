@@ -5,14 +5,13 @@ import prisma from "../../../lib/prisma";
 
 async function refreshAccessToken(token) {
   try {
-    const url =
-      "https://github.com/login/oauth/access_token" +
-      new URLSearchParams({
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET,
-        grant_type: "refresh_token",
-        refresh_token: token.refreshToken,
-      });
+    const url = "https://github.com/login/oauth/access_token";
+    // new URLSearchParams({
+    //   client_id: process.env.GITHUB_CLIENT_ID,
+    //   client_secret: process.env.GITHUB_CLIENT_SECRET,
+    //   grant_type: "refresh_token",
+    //   refresh_token: token.refreshToken,
+    // });
 
     const response = await fetch(url, {
       headers: {
@@ -23,7 +22,7 @@ async function refreshAccessToken(token) {
         client_id: process.env.GITHUB_CLIENT_ID,
         client_secret: process.env.GITHUB_CLIENT_SECRET,
         grant_type: "refresh_token",
-        refresh_token: token.refreshToken,
+        refresh_token: token.account.refresh_token,
       }),
     });
 
@@ -35,9 +34,11 @@ async function refreshAccessToken(token) {
 
     return {
       ...token,
-      accessToken: refreshedTokens.access_token,
-      accessTokenExpires: Date.now() + refreshedTokens.expires_at * 1000,
-      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
+      account: {
+        accessToken: refreshedTokens.access_token,
+        accessTokenExpires: Date.now() + refreshedTokens.expires_at * 1000,
+        refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
+      }, // Fall back to old refresh token
     };
   } catch (error) {
     console.log(error);
