@@ -16,11 +16,9 @@ function AskWithId() {
       const result = await axios.get("/api/ask/" + askid);
 
       setAsk(result.data.data);
-      console.log(result.data);
     };
-    if (askid) {
-      return fetchAsk();
-    }
+
+    fetchAsk();
   }, [askid]);
   return (
     <div className="container  flex jc ">
