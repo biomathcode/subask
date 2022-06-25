@@ -108,13 +108,6 @@ export default function Home() {
                     <DialogDemo askid={el.id} />
                     {/* <button className="btn rosund">Answer </button> */}
                   </div>
-                  <div className="flex center">
-                    <p>
-                      {formatDistance(new Date(el?.createdAt), new Date(), {
-                        addSuffix: true,
-                      })}
-                    </p>
-                  </div>
                 </div>
               </div>
             );
