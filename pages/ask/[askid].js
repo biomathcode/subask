@@ -19,28 +19,30 @@ function AskWithId() {
       console.log(result.data);
     };
     if (askid) {
-      fetchAsk();
+      return fetchAsk();
     }
   }, [askid]);
-  return ask ? (
+  return (
     <div className="container  flex jc ">
       <div className="main jc flux  ">
-        <div className="flex column">
-          <h1>{ask.content}</h1>
-          <p>posted by {ask.author.name}</p>
+        {ask ? (
+          <div className="flex column">
+            <h1>{ask.content}</h1>
+            <p>posted by {ask.author.name}</p>
 
-          <div>
-            {ask.answers.map((ans) => {
-              return (
-                <Gist key={ans.gistId} id={ans.gistId} file={ans.gistFile} />
-              );
-            })}
+            <div>
+              {ask.answers.map((ans) => {
+                return (
+                  <Gist key={ans.gistId} id={ans.gistId} file={ans.gistFile} />
+                );
+              })}
+            </div>
           </div>
-        </div>
+        ) : (
+          <Loader />
+        )}
       </div>
     </div>
-  ) : (
-    <Loader />
   );
 }
 
