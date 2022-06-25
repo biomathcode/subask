@@ -69,7 +69,9 @@ export default function Home() {
   if (error) {
     return (
       <div className="container flex jc center">
-        <div className="main">something went wrong!!</div>
+        <div className="main">
+          <Loader />
+        </div>
       </div>
     );
   }
@@ -77,7 +79,9 @@ export default function Home() {
   if (!data)
     return (
       <div className="container flex jc center">
-        <div className="main">something went wrong!!</div>
+        <div className="main">
+          <Loader />
+        </div>
       </div>
     );
 
