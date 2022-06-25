@@ -1,16 +1,36 @@
 import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Gist from "react-gist";
+import { Loader } from "../../components/Icons";
 
-function AskWithId({ data }) {
-  return (
+function AskWithId() {
+  const [ask, setAsk] = useState();
+
+  const router = useRouter();
+
+  const { askid } = router.query;
+
+  useEffect(() => {
+    const fetchAsk = async () => {
+      const result = await axios.get("/api/ask/" + askid);
+
+      setAsk(result.data.data);
+      console.log(result.data);
+    };
+    if (askid) {
+      fetchAsk();
+    }
+  }, [askid]);
+  return ask ? (
     <div className="container  flex jc ">
       <div className="main jc flux  ">
         <div className="flex column">
-          <h1>{data?.content}</h1>
-          <p>posted by {data?.author?.name}</p>
+          <h1>{ask.content}</h1>
+          <p>posted by {ask.author.name}</p>
 
           <div>
-            {data?.answers?.map((ans) => {
+            {ask.answers.map((ans) => {
               return (
                 <Gist key={ans.gistId} id={ans.gistId} file={ans.gistFile} />
               );
@@ -19,17 +39,9 @@ function AskWithId({ data }) {
         </div>
       </div>
     </div>
+  ) : (
+    <Loader />
   );
 }
 
 export default AskWithId;
-
-export async function getServerSideProps({ req, res, query }) {
-  const { askid } = query;
-
-  const response = await fetch(`https:subask.in/api/ask/${askid}`);
-
-  const jsonData = await response?.json();
-
-  return { props: jsonData };
-}
