@@ -20,6 +20,7 @@ function AskWithId() {
 
     fetchAsk();
   }, [askid]);
+
   return (
     <div className="container  flex jc ">
       <div className="main jc flux  ">

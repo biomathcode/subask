@@ -4,9 +4,9 @@ import { violet, blackA, mauve, green } from "@radix-ui/colors";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import Select from "react-select";
-import Gist from "react-gist";
 import axios from "axios";
 import { signIn, useSession } from "next-auth/react";
+import useSWR from "swr";
 
 const overlayShow = keyframes({
   "0%": { opacity: 0 },
@@ -166,34 +166,39 @@ const Input = styled("input", {
 
   "&:focus": { boxShadow: `0 0 0 2px ${violet.violet8}` },
 });
+const fetchGists = async () => {
+  const result = await axios.get("/api/gists");
+
+  const newData = await result.data.data.data.flatMap((el) => {
+    const files = Object.values(el.files);
+
+    return files.map((data, i) => {
+      return {
+        value: el.id + " " + i,
+        label: data.filename,
+      };
+    });
+  });
+
+  return newData;
+};
 
 const DialogDemo = ({ askid }) => {
-  const [gists, setGists] = useState();
-
   const [files, setFiles] = useState();
 
   const { data: session } = useSession();
+
+  const { data, error } = useSWR(session ? "/api/gists" : null, fetchGists);
+
   useEffect(() => {
-    const fetchGists = async () => {
-      const result = await axios.get("/api/gists");
-
-      const newData = await result.data.data.data.flatMap((el) => {
-        const files = Object.values(el.files);
-
-        return files.map((data, i) => {
-          return {
-            value: el.id + " " + i,
-            label: data.filename,
-          };
-        });
-      });
-
-      setGists(newData);
-    };
-    if (session) {
-      fetchGists();
+    if (session?.error === "RefreshAccessTokenError") {
+      signIn(); // Force sign in to hopefully resolve error
     }
-  }, []);
+  }, [session]);
+
+  if (error) {
+    return <div>something went wrong</div>;
+  }
 
   const handleSubmit = async () => {
     if (!session) {
@@ -202,7 +207,7 @@ const DialogDemo = ({ askid }) => {
     const response = await axios.post("/api/answer", {
       gistId: files.value,
       gistFile: files.label,
-      askid: session.user.id,
+      askid,
       authorId: authorId,
     });
 
@@ -241,7 +246,7 @@ const DialogDemo = ({ askid }) => {
                   label: v.label,
                 });
               }}
-              options={gists}
+              options={data}
             />
             <Flex css={{ marginTop: 25, justifyContent: "flex-end" }}>
               <DialogClose asChild>

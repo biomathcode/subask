@@ -9,5 +9,6 @@ TODO
 [ ] Work on Authentication flow
 [ ] Make Profile Page
 [ ] Ask pages with Blog 
+[ ] Move from useEffect and useState for fetching to swr, and react query
 
 - The Master-Detail Pattern is used to display 

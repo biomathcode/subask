@@ -9,34 +9,77 @@ import axios from "axios";
 import { formatDistance } from "date-fns";
 import DialogDemo from "../components/UI/Dialogs";
 import Link from "next/link";
+import useSWR from "swr";
+
+const fetchData = async () => {
+  const result = await axios.get("/api/ask");
+
+  return result.data.data;
+};
+const fetchTags = async () => {
+  const result = await axios.get("/api/tags");
+
+  return result.data.data;
+};
+
+const Tags = () => {
+  const { data, error } = useSWR("api/tags", fetchTags);
+  if (error) {
+    return (
+      <div className="container flex jc center">
+        <div className="main">something went wrong!!</div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="container flex jc center">
+        <div className="main">Loading..!!</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex gap-10 h-scroll ">
+      {data.map((el, i) => {
+        return (
+          <>
+            <div className="tag" key={i}>
+              {el.name}
+            </div>
+          </>
+        );
+      })}
+    </div>
+  );
+};
 
 export default function Home() {
-  const [newdata, setData] = useState();
-
-  const [tags, setTags] = useState();
-
   const { data: session } = useSession();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get("/api/ask");
-
-      setData(result.data.data);
-    };
-    const fetchTags = async () => {
-      const result = await axios.get("/api/tags");
-
-      setTags(result.data.data);
-    };
-    fetchData();
-    fetchTags();
-  }, []);
+  const { data, error } = useSWR("/api/ask", fetchData);
 
   useEffect(() => {
     if (session?.error === "RefreshAccessTokenError") {
-      signIn(); // Force sign in to hopefully resolve error
+      signIn();
     }
   }, [session]);
+
+  if (error) {
+    return (
+      <div className="container flex jc center">
+        <div className="main">something went wrong!!</div>
+      </div>
+    );
+  }
+
+  if (!data)
+    return (
+      <div className="container flex jc center">
+        <div className="main">something went wrong!!</div>
+      </div>
+    );
 
   return (
     <div className="container flex jc  center ">
@@ -55,66 +98,52 @@ export default function Home() {
             background: "white",
           }}
         >
-          <div className="flex gap-10 h-scroll ">
-            {tags &&
-              tags.map((el) => {
-                return (
-                  <>
-                    <div className="tag" key={el.id}>
-                      {el.name}
-                    </div>
-                  </>
-                );
-              })}
-          </div>
+          <Tags />
         </div>
-        {newdata ? (
-          newdata.map((el) => {
-            return (
-              <div
-                className="flex column"
-                style={{
-                  width: "400px",
-                  borderBottom: "1px solid #eee",
-                  padding: "5px 10px",
-                }}
-                key={el.id}
-              >
-                <Link href={"/ask/" + el.id}>
-                  <p
-                    style={{
-                      cursor: "pointer",
-                      fontSize: "1.30769231rem",
-                      color: "var(--text-color)",
-                    }}
-                  >
-                    {el.content}
-                  </p>
-                </Link>
 
+        {data.map((el) => {
+          return (
+            <div
+              className="flex column"
+              style={{
+                width: "400px",
+                borderBottom: "1px solid #eee",
+                padding: "5px 10px",
+              }}
+              key={el.id}
+            >
+              <Link href={"/ask/" + el.id}>
+                <p
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "1.30769231rem",
+                    color: "var(--text-color)",
+                  }}
+                >
+                  {el.content}
+                </p>
+              </Link>
+
+              <div className="flex center">
+                <img
+                  src={el.author.image}
+                  width="30px"
+                  height="30px"
+                  style={{
+                    borderRadius: "50%",
+                  }}
+                />
+                <p>{el.author.name}</p>
+              </div>
+              <div className="flex js">
                 <div className="flex center">
-                  <img
-                    src={el.author.image}
-                    width="30px"
-                    height="30px"
-                    style={{
-                      borderRadius: "50%",
-                    }}
-                  />
-                  <p>{el.author.name}</p>
-                </div>
-                <div className="flex js">
-                  <div className="flex center">
-                    <DialogDemo askid={el.id} />
-                    {/* <button className="btn rosund">Answer </button> */}
-                  </div>
+                  <DialogDemo askid={el.id} />
+                  {/* <button className="btn rosund">Answer </button> */}
                 </div>
               </div>
-            );
-          })
-        ) : (
-          <Loader />
-        )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

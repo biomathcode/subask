@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   switch (req.method) {
     case "GET":
-      const getAsk = await prisma.ask.findFirst({
+      const getAsk = await prisma.ask.findUnique({
         where: {
           id: id,
         },
