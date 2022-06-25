@@ -70,56 +70,53 @@ export default function Home() {
         </div>
         {newdata ? (
           newdata.map((el) => {
-            console.log(el);
             return (
-              <>
-                <div
-                  className="flex column"
-                  style={{
-                    width: "400px",
-                    borderBottom: "1px solid #eee",
-                    padding: "5px 10px",
-                  }}
-                  key={el.id}
-                >
-                  <Link href={"/ask/" + el.id}>
-                    <p
-                      style={{
-                        cursor: "pointer",
-                        fontSize: "1.30769231rem",
-                        color: "var(--text-color)",
-                      }}
-                    >
-                      {el.content}
-                    </p>
-                  </Link>
+              <div
+                className="flex column"
+                style={{
+                  width: "400px",
+                  borderBottom: "1px solid #eee",
+                  padding: "5px 10px",
+                }}
+                key={el.id}
+              >
+                <Link href={"/ask/" + el.id}>
+                  <p
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "1.30769231rem",
+                      color: "var(--text-color)",
+                    }}
+                  >
+                    {el.content}
+                  </p>
+                </Link>
 
+                <div className="flex center">
+                  <img
+                    src={el.author.image}
+                    width="30px"
+                    height="30px"
+                    style={{
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <p>{el.author.name}</p>
+                </div>
+                <div className="flex js">
                   <div className="flex center">
-                    <img
-                      src={el.author.image}
-                      width="30px"
-                      height="30px"
-                      style={{
-                        borderRadius: "50%",
-                      }}
-                    />
-                    <p>{el.author.name}</p>
+                    <DialogDemo askid={el.id} />
+                    {/* <button className="btn rosund">Answer </button> */}
                   </div>
-                  <div className="flex js">
-                    <div className="flex center">
-                      <DialogDemo askid={el.id} authorId={session?.user.id} />
-                      {/* <button className="btn rosund">Answer </button> */}
-                    </div>
-                    <div className="flex center">
-                      <p>
-                        {formatDistance(new Date(el.createdAt), new Date(), {
-                          addSuffix: true,
-                        })}
-                      </p>
-                    </div>
+                  <div className="flex center">
+                    <p>
+                      {formatDistance(new Date(el?.createdAt), new Date(), {
+                        addSuffix: true,
+                      })}
+                    </p>
                   </div>
                 </div>
-              </>
+              </div>
             );
           })
         ) : (

@@ -6,6 +6,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import Select from "react-select";
 import Gist from "react-gist";
 import axios from "axios";
+import { signIn, useSession } from "next-auth/react";
 
 const overlayShow = keyframes({
   "0%": { opacity: 0 },
@@ -166,18 +167,18 @@ const Input = styled("input", {
   "&:focus": { boxShadow: `0 0 0 2px ${violet.violet8}` },
 });
 
-const DialogDemo = ({ askid, authorId }) => {
+const DialogDemo = ({ askid }) => {
   const [gists, setGists] = useState();
 
   const [files, setFiles] = useState();
+
+  const { data: session } = useSession();
   useEffect(() => {
     const fetchGists = async () => {
       const result = await axios.get("/api/gists");
 
       const newData = await result.data.data.data.flatMap((el) => {
         const files = Object.values(el.files);
-
-        console.log(files);
 
         return files.map((data, i) => {
           return {
@@ -187,19 +188,21 @@ const DialogDemo = ({ askid, authorId }) => {
         });
       });
 
-      console.log(newData);
-
       setGists(newData);
     };
-
-    fetchGists();
+    if (session) {
+      fetchGists();
+    }
   }, []);
 
   const handleSubmit = async () => {
+    if (!session) {
+      return alert("Please login ");
+    }
     const response = await axios.post("/api/answer", {
       gistId: files.value,
       gistFile: files.label,
-      askid: askid,
+      askid: session.user.id,
       authorId: authorId,
     });
 
@@ -216,35 +219,44 @@ const DialogDemo = ({ askid, authorId }) => {
         <DialogDescription>
           Choose the Gist which answers the questions.
         </DialogDescription>
-        <Select
-          styles={{
-            container: (provided, state) => ({
-              ...provided,
-            }),
-            control: (base) => ({
-              ...base,
-              border: "none",
-            }),
-          }}
-          name="gists"
-          value={files}
-          placeholder="Choose a gists"
-          onChange={(v) => {
-            const id = v.value.split(" ")[0];
-            setFiles({
-              value: id,
-              label: v.label,
-            });
-          }}
-          options={gists}
-        />
-        <Flex css={{ marginTop: 25, justifyContent: "flex-end" }}>
-          <DialogClose asChild>
-            <Button onClick={() => handleSubmit()} variant="green">
-              Post
-            </Button>
-          </DialogClose>
-        </Flex>
+        {session ? (
+          <>
+            <Select
+              styles={{
+                container: (provided, state) => ({
+                  ...provided,
+                }),
+                control: (base) => ({
+                  ...base,
+                  border: "none",
+                }),
+              }}
+              name="gists"
+              value={files}
+              placeholder="Choose a gists"
+              onChange={(v) => {
+                const id = v.value.split(" ")[0];
+                setFiles({
+                  value: id,
+                  label: v.label,
+                });
+              }}
+              options={gists}
+            />
+            <Flex css={{ marginTop: 25, justifyContent: "flex-end" }}>
+              <DialogClose asChild>
+                <Button onClick={() => handleSubmit()} variant="green">
+                  Post
+                </Button>
+              </DialogClose>
+            </Flex>
+          </>
+        ) : (
+          <button onClick={() => signIn("github")} className="btn">
+            Login with github
+          </button>
+        )}
+
         <DialogClose asChild>
           <IconButton aria-label="Close">
             <Cross2Icon />

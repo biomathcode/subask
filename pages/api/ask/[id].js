@@ -19,7 +19,7 @@ export default async function handler(req, res) {
           createdAt: true,
         },
       });
-      console.log(getAsk);
+
       return res.status(200).json({ data: getAsk });
     case "PUT":
       return res.status(200).json({ data: `Update response  ${id}` });
