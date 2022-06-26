@@ -167,20 +167,26 @@ const Input = styled("input", {
   "&:focus": { boxShadow: `0 0 0 2px ${violet.violet8}` },
 });
 const fetchGists = async () => {
-  const result = await axios.get("/api/gists");
+  try {
+    const result = await axios.get("/api/gists");
 
-  const newData = await result.data.data.data.flatMap((el) => {
-    const files = Object.values(el.files);
+    const newData = await result.data.data.data.flatMap((el) => {
+      const files = Object.values(el.files);
 
-    return files.map((data, i) => {
-      return {
-        value: el.id + " " + i,
-        label: data.filename,
-      };
+      return files.map((data, i) => {
+        return {
+          value: el.id + " " + i,
+          label: data.filename,
+        };
+      });
     });
-  });
-
-  return newData;
+    return newData;
+  } catch (e) {
+    console.log(e);
+    if (e.response.data.status === "Bad credentials") {
+      signIn();
+    }
+  }
 };
 
 const DialogDemo = ({ askid }) => {
@@ -208,7 +214,7 @@ const DialogDemo = ({ askid }) => {
       gistId: files.value,
       gistFile: files.label,
       askid,
-      authorId: authorId,
+      authorId: session.user.id,
     });
 
     console.log(response);
@@ -224,6 +230,12 @@ const DialogDemo = ({ askid }) => {
         <DialogDescription>
           Choose the Gist which answers the questions.
         </DialogDescription>
+        <Flex css={{ margin: "25px 0px", justifyContent: "flex-end" }}>
+          <a href="https://gist.github.com" rel="noreferrer" target={"_blank"}>
+            <Button as="a">Create Gist</Button>
+          </a>
+        </Flex>
+
         {session ? (
           <>
             <Select

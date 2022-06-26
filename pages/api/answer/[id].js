@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import prisma from "../../../lib/prisma";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   const { id } = req.query;
 
   console.log(id);
@@ -13,6 +13,13 @@ export default function handler(req, res) {
     case "PUT":
       return res.status(200).json({ data: `Update response  ${id}` });
     case "DELETE":
-      return res.status(200).json({ data: `Delete  ${id} ` });
+      const deleteJson = await prisma.answer.delete({
+        where: {
+          id: id,
+        },
+      });
+      return res
+        .status(200)
+        .json({ message: `Delete  ${id} `, data: deleteJson });
   }
 }

@@ -1,0 +1,4 @@
+configurationset:
+  - configuration:
+      name: postgresql_config
+      uri: postgresql://containers-us-west-67.railway.app:7481/railway?user=postgres&password=vJiLPYLVw6aEQFTlKPW6

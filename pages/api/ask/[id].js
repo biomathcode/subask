@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
+import { tr } from "date-fns/locale";
 import prisma from "../../../lib/prisma";
 
 export default async function handler(req, res) {
@@ -12,6 +13,7 @@ export default async function handler(req, res) {
           id: id,
         },
         select: {
+          authorId: true,
           answers: true,
           content: true,
           id: true,
@@ -20,7 +22,19 @@ export default async function handler(req, res) {
         },
       });
 
-      return res.status(200).json({ data: getAsk });
+      const getAnswers = await prisma.answer.findMany({
+        where: {
+          askid: id,
+        },
+        select: {
+          author: true,
+          id: true,
+          gistFile: true,
+          gistId: true,
+        },
+      });
+
+      return res.status(200).json({ data: getAsk, answers: getAnswers });
     case "PUT":
       return res.status(200).json({ data: `Update response  ${id}` });
     case "DELETE":

@@ -15,8 +15,15 @@ export default async function handler(req, res) {
           gistId: gistId,
           gistFile: gistFile,
           askid: askid,
-
           authorId: authorId,
+        },
+        select: {
+          author: true,
+          authorId: true,
+          gistFile: true,
+          id: true,
+          askid: true,
+          answerTo: true,
         },
       });
       return res.status(200).json({ data: response });

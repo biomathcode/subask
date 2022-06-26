@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import axios from "axios";
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import prisma from "../../../lib/prisma";
@@ -6,27 +7,28 @@ import prisma from "../../../lib/prisma";
 async function refreshAccessToken(token) {
   try {
     const url = "https://github.com/login/oauth/access_token";
-    // new URLSearchParams({
-    //   client_id: process.env.GITHUB_CLIENT_ID,
-    //   client_secret: process.env.GITHUB_CLIENT_SECRET,
-    //   grant_type: "refresh_token",
-    //   refresh_token: token.refreshToken,
-    // });
+
+    const bodyjson = {
+      client_id: process.env.GITHUB_CLIENT_ID,
+      client_secret: process.env.GITHUB_CLIENT_SECRET,
+      grant_type: "refresh_token",
+      refresh_token: token && token.account.refresh_token,
+    };
 
     const response = await fetch(url, {
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
       method: "POST",
-      body: JSON.stringify({
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET,
-        grant_type: "refresh_token",
-        refresh_token: token.account.refresh_token,
-      }),
+      body: bodyjson,
     });
 
-    const refreshedTokens = await response.json();
+    console.log(response);
+
+    const refreshedTokens = await response.text();
+
+    console.log("this is the refreshTOkne", refreshedTokens);
 
     if (!response.ok) {
       throw refreshedTokens;

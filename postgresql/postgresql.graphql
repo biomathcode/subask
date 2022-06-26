@@ -1,0 +1,500 @@
+type Account {
+  access_token: String
+  expires_at: Int
+  id: String!
+  id_token: String
+  provider: String!
+  providerAccountId: String!
+  refresh_token: String
+  refresh_token_expires_in: Int
+  scope: String
+  session_state: String
+  token_type: String
+  type: String!
+  user: User
+    @materializer(
+      query: "getUser"
+      arguments: [{ name: "id", field: "userId" }]
+    )
+  userId: String!
+}
+
+type Answer {
+  ask: Ask
+    @materializer(query: "getAsk", arguments: [{ name: "id", field: "askid" }])
+  askid: String!
+  authorId: String!
+  createdAt: DateTime!
+  gistFile: String!
+  gistId: String!
+  id: String!
+  updatedAt: DateTime!
+  user: User
+    @materializer(
+      query: "getUser"
+      arguments: [{ name: "id", field: "authorId" }]
+    )
+}
+
+type Ask {
+  _AskToTagList: [_AskToTag] @materializer(query: "get_AskToTagUsingA")
+  answerList: [Answer] @materializer(query: "getAnswerUsingAskid")
+  authorId: String!
+  content: String!
+  createdAt: DateTime!
+  id: String!
+  user: User
+    @materializer(
+      query: "getUser"
+      arguments: [{ name: "id", field: "authorId" }]
+    )
+}
+
+type Session {
+  expires: DateTime!
+  id: String!
+  sessionToken: String!
+  user: User
+    @materializer(
+      query: "getUser"
+      arguments: [{ name: "id", field: "userId" }]
+    )
+  userId: String!
+}
+
+type Tag {
+  _AskToTagList: [_AskToTag] @materializer(query: "get_AskToTagUsingB")
+  id: Int!
+  name: String!
+}
+
+type User {
+  accountList: [Account] @materializer(query: "getAccountUsingUserId")
+  answerList: [Answer] @materializer(query: "getAnswerUsingAuthorId")
+  askList: [Ask] @materializer(query: "getAskUsingAuthorId")
+  email: String
+  emailVerified: DateTime
+  id: String!
+  image: String
+  name: String
+  sessionList: [Session] @materializer(query: "getSessionUsingUserId")
+}
+
+type VerificationToken {
+  expires: DateTime!
+  identifier: String!
+  token: String!
+}
+
+type _AskToTag {
+  A: String!
+  B: Int!
+  ask: Ask
+    @materializer(query: "getAsk", arguments: [{ name: "id", field: "A" }])
+  tag: Tag
+    @materializer(query: "getTag", arguments: [{ name: "id", field: "B" }])
+}
+
+type _prisma_migrations {
+  applied_steps_count: Int!
+  checksum: String!
+  finished_at: DateTime
+  id: String!
+  logs: String
+  migration_name: String!
+  rolled_back_at: DateTime
+  started_at: DateTime!
+}
+
+"""
+These are some examples of queries generated from the schema. Feel free to modify them or add your own.
+"""
+type Query {
+  getAccountList: [Account]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Account"
+      configuration: "postgresql_config"
+    )
+  getAccount(id: String!): Account
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Account"
+      configuration: "postgresql_config"
+    )
+  getAnswerList: [Answer]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Answer"
+      configuration: "postgresql_config"
+    )
+  getAnswer(id: String!): Answer
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Answer"
+      configuration: "postgresql_config"
+    )
+  getAskList: [Ask]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Ask"
+      configuration: "postgresql_config"
+    )
+  getAsk(id: String!): Ask
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Ask"
+      configuration: "postgresql_config"
+    )
+  getAnswerUsingAskid(id: String!): [Answer]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."askid", T."authorId", T."createdAt", T."gistFile", T."gistId", T."id", T."updatedAt"
+        FROM "public"."Answer" T
+        WHERE T."askid" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  get_AskToTagUsingA(id: String!): [_AskToTag]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."A", T."B"
+        FROM "public"."_AskToTag" T
+        WHERE T."A" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  getSessionList: [Session]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Session"
+      configuration: "postgresql_config"
+    )
+  getSession(id: String!): Session
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Session"
+      configuration: "postgresql_config"
+    )
+  getTagList: [Tag]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Tag"
+      configuration: "postgresql_config"
+    )
+  getTag(id: Int!): Tag
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Tag"
+      configuration: "postgresql_config"
+    )
+  get_AskToTagUsingB(id: Int!): [_AskToTag]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."A", T."B"
+        FROM "public"."_AskToTag" T
+        WHERE T."B" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  getUserList: [User]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "User"
+      configuration: "postgresql_config"
+    )
+  getUser(id: String!): User
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "User"
+      configuration: "postgresql_config"
+    )
+  getAccountUsingUserId(id: String!): [Account]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."access_token", T."expires_at", T."id", T."id_token", T."provider", T."providerAccountId", T."refresh_token", T."refresh_token_expires_in", T."scope", T."session_state", T."token_type", T."type", T."userId"
+        FROM "public"."Account" T
+        WHERE T."userId" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  getAnswerUsingAuthorId(id: String!): [Answer]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."askid", T."authorId", T."createdAt", T."gistFile", T."gistId", T."id", T."updatedAt"
+        FROM "public"."Answer" T
+        WHERE T."authorId" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  getAskUsingAuthorId(id: String!): [Ask]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."authorId", T."content", T."createdAt", T."id"
+        FROM "public"."Ask" T
+        WHERE T."authorId" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  getSessionUsingUserId(id: String!): [Session]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."expires", T."id", T."sessionToken", T."userId"
+        FROM "public"."Session" T
+        WHERE T."userId" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  getVerificationTokenList: [VerificationToken]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "VerificationToken"
+      configuration: "postgresql_config"
+    )
+  get_AskToTagList: [_AskToTag]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "_AskToTag"
+      configuration: "postgresql_config"
+    )
+  get_prisma_migrationsList: [_prisma_migrations]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "_prisma_migrations"
+      configuration: "postgresql_config"
+    )
+  get_prisma_migrations(id: String!): _prisma_migrations
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "_prisma_migrations"
+      configuration: "postgresql_config"
+    )
+}
+
+"""
+These are some examples of mutations generated from the schema. Feel free to modify them or add your own.
+"""
+type Mutation {
+  insertAccount(
+    id_token: String!
+    scope: String!
+    id: String!
+    provider: String!
+    providerAccountId: String!
+    type: String!
+    refresh_token: String!
+    session_state: String!
+    access_token: String!
+    token_type: String!
+    userId: String!
+    expires_at: Int!
+    refresh_token_expires_in: Int!
+  ): Account
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Account"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteAccount(id: String!): Account
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Account"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insertAnswer(
+    askid: String!
+    createdAt: DateTime!
+    id: String!
+    updatedAt: DateTime!
+    gistFile: String!
+    gistId: String!
+    authorId: String!
+  ): Answer
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Answer"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteAnswer(id: String!): Answer
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Answer"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insertAsk(
+    id: String!
+    content: String!
+    authorId: String!
+    createdAt: DateTime!
+  ): Ask
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Ask"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteAsk(id: String!): Ask
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Ask"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insertSession(
+    id: String!
+    sessionToken: String!
+    userId: String!
+    expires: DateTime!
+  ): Session
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Session"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteSession(id: String!): Session
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Session"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insertTag(name: String!): Tag
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Tag"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteTag(id: Int!): Tag
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "Tag"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insertUser(
+    image: String!
+    id: String!
+    email: String!
+    name: String!
+    emailVerified: DateTime!
+  ): User
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "User"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteUser(id: String!): User
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "User"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insertVerificationToken(
+    identifier: String!
+    token: String!
+    expires: DateTime!
+  ): VerificationToken
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "VerificationToken"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteVerificationToken(
+    identifier: String!
+    token: String!
+    expires: DateTime!
+  ): VerificationToken
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "VerificationToken"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insert_AskToTag(A: String!, B: Int!): _AskToTag
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "_AskToTag"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  delete_AskToTag(A: String!, B: Int!): _AskToTag
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "_AskToTag"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insert_prisma_migrations(
+    rolled_back_at: DateTime!
+    finished_at: DateTime!
+    id: String!
+    checksum: String!
+    started_at: DateTime!
+    logs: String!
+    migration_name: String!
+    applied_steps_count: Int!
+  ): _prisma_migrations
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "_prisma_migrations"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  delete_prisma_migrations(id: String!): _prisma_migrations
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "_prisma_migrations"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+}

@@ -62,6 +62,7 @@ export default function Home() {
 
   useEffect(() => {
     if (session?.error === "RefreshAccessTokenError") {
+      console.log(session.error);
       signIn();
     }
   }, [session]);
@@ -139,6 +140,7 @@ export default function Home() {
                 />
                 <p>{el.author.name}</p>
               </div>
+              <p>{el?.answers?.length} answers</p>
               <div className="flex js">
                 <div className="flex center">
                   <DialogDemo askid={el.id} />
