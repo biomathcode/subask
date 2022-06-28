@@ -1,13 +1,7 @@
 import "../styles/globals.css";
 
 import { SessionProvider } from "next-auth/react";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import Navbar from "../components/UI/Navbar";
 import AskButton from "../components/UI/AskButton";
 
