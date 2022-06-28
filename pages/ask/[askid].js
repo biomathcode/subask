@@ -19,20 +19,16 @@ function AskWithId() {
     const fetchAsk = async () => {
       const result = await axios.get("/api/ask/" + askid);
 
-      console.log(result.data);
-
       setAsk(result.data.data);
     };
 
     fetchAsk();
   }, [askid]);
 
-  console.log(ask);
-
   const handleDelete = async (id) => {
-    const data = await axios.delete(`http://localhost:3000/api/answer/${id}`);
+    const data = await axios.delete(`https://subask.in/api/answer/${id}`);
 
-    console.log(data);
+    return data;
   };
   return (
     <>
@@ -50,7 +46,6 @@ function AskWithId() {
               <div>
                 {ask.answers !== [] &&
                   ask.answers.map((ans) => {
-                    console.log(ans);
                     return (
                       <div key={ans.id}>
                         <Gist
