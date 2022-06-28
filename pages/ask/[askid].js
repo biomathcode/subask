@@ -17,7 +17,7 @@ function AskWithId() {
 
   useEffect(() => {
     const fetchAsk = async () => {
-      const result = await axios.get("https://subask.in/api/ask/" + askid);
+      const result = await axios.get("https://subask.in/api/ask" + askid);
 
       setAsk(result.data.data);
     };
