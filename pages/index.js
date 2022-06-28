@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Loader } from "../components/Icons";
 import axios from "axios";
 
-import { formatDistance, parseISO } from "date-fns";
+import { format, formatDistance, parseISO } from "date-fns";
 import DialogDemo from "../components/UI/Dialogs";
 import Link from "next/link";
 import useSWR from "swr";
@@ -152,8 +152,7 @@ export default function Home() {
                         }}
                       />
                       <p>
-                        {el.author.name} asked{" "}
-                        {formatDistance(parseInt(Date.now()), timestamp)}
+                        {el.author.name} asked {format(timestamp, "dd-MM-yyyy")}
                       </p>
                     </div>
                   </div>
