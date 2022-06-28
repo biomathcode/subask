@@ -62,7 +62,7 @@ function AskWithId() {
                         {session.user.id === ans.authorId ? (
                           <button
                             onClick={() => handleDelete(ans.id)}
-                            className="btn"
+                            className="btn round"
                           >
                             delete
                           </button>

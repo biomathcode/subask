@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import Gist from "react-gist";
 
 function AskComponent() {
   const [value, setValue] = useState("");
@@ -12,33 +11,9 @@ function AskComponent() {
 
   const [select, setSelect] = useState();
 
-  const [gists, setGists] = useState();
-
-  const [files, setFiles] = useState();
-
   const { data: session } = useSession();
 
   useEffect(() => {
-    const fetchGists = async () => {
-      const result = await axios.get("/api/gists");
-
-      const newData = await result.data.data.data.flatMap((el) => {
-        const files = Object.values(el.files);
-
-        console.log(files);
-
-        return files.map((data, i) => {
-          return {
-            value: el.id + " " + i,
-            label: data.filename,
-          };
-        });
-      });
-
-      console.log(newData);
-
-      setGists(newData);
-    };
     const fetchTags = async () => {
       const result = await axios.get("/api/tags");
 
@@ -51,11 +26,13 @@ function AskComponent() {
 
       setTags(newData);
     };
-    fetchGists();
+
     fetchTags();
   }, []);
 
-  useEffect(() => {}, [files]);
+  const handleAsk = () => {
+    const askInput = value;
+  };
 
   return (
     <div className="flex jc column center main">
@@ -110,36 +87,6 @@ function AskComponent() {
               onChange={(v) => (v.length <= 2 ? setSelect(v) : null)}
               options={tags}
             />
-          </div>
-          <Select
-            styles={{
-              container: (provided, state) => ({
-                ...provided,
-              }),
-              control: (base) => ({
-                ...base,
-                border: "none",
-              }),
-            }}
-            name="gists"
-            value={files}
-            placeholder="Choose a gists"
-            onChange={(v) => {
-              const id = v.value.split(" ")[0];
-              setFiles({
-                value: id,
-                label: v.label,
-              });
-            }}
-            options={gists}
-          />
-          <div
-            style={{
-              height: "50vh",
-              overflow: "scroll",
-            }}
-          >
-            {files && <Gist id={files?.value} file={files?.label} />}
           </div>
 
           <div className="flex jc center mt-10">

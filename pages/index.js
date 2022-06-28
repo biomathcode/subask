@@ -10,6 +10,22 @@ import { formatDistance } from "date-fns";
 import DialogDemo from "../components/UI/Dialogs";
 import Link from "next/link";
 import useSWR from "swr";
+import { styled } from "@stitches/react";
+
+const Card = styled("div", {
+  width: "400px",
+  zIndex: 2,
+  marginBottom: "10px",
+  padding: "20px 20px",
+  display: "flex",
+  flexDirection: "column",
+  borderRadius: "10px",
+  gap: "2px",
+  cursor: "pointer",
+  "&:hover": {
+    background: "#eee",
+  },
+});
 
 const fetchData = async () => {
   const result = await axios.get("/api/ask");
@@ -107,47 +123,49 @@ export default function Home() {
         </div>
 
         {data.map((el) => {
+          const timestamp = el.createdAt ? new Date(el.createdAt) : "";
           return (
-            <div
-              className="flex column"
-              style={{
-                width: "400px",
-                borderBottom: "1px solid #eee",
-                padding: "5px 10px",
-              }}
-              key={el.id}
-            >
+            <Card key={el.id}>
               <Link href={"/ask/" + el.id}>
-                <p
-                  style={{
-                    cursor: "pointer",
-                    fontSize: "1.30769231rem",
-                    color: "var(--text-color)",
-                  }}
-                >
-                  {el.content}
-                </p>
+                <div>
+                  <div
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "1.30769231rem",
+                      color: "var(--text-color)",
+                    }}
+                  >
+                    {el.content}
+                  </div>
+                  <div
+                    className="flex js center"
+                    style={{ color: "#555", fontSize: "14px" }}
+                  >
+                    <div>{el?.answers?.length} answers</div>
+                    <div className="flex center">
+                      <img
+                        src={el.author.image}
+                        width="20px"
+                        height="20px"
+                        style={{
+                          borderRadius: "50%",
+                        }}
+                      />
+                      <p>
+                        {el.author.name} asked{" "}
+                        {formatDistance(Date.now(), timestamp)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </Link>
 
-              <div className="flex center">
-                <img
-                  src={el.author.image}
-                  width="30px"
-                  height="30px"
-                  style={{
-                    borderRadius: "50%",
-                  }}
-                />
-                <p>{el.author.name}</p>
-              </div>
-              <p>{el?.answers?.length} answers</p>
               <div className="flex js">
                 <div className="flex center">
                   <DialogDemo askid={el.id} />
-                  {/* <button className="btn rosund">Answer </button> */}
                 </div>
               </div>
-            </div>
+            </Card>
           );
         })}
       </div>
