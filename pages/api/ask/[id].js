@@ -15,7 +15,6 @@ export default async function handler(req, res) {
           content: true,
           id: true,
           author: true,
-          createdAt: true,
         },
       });
 
