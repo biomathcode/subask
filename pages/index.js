@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import { Loader } from "../components/Icons";
 
-import { format, formatDistance, parseISO } from "date-fns";
+import { format } from "date-fns";
 import DialogDemo from "../components/UI/Dialogs";
 import Link from "next/link";
 import useSWR from "swr";

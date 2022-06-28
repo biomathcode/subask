@@ -28,7 +28,9 @@ function AskWithId() {
   }, [askid]);
 
   const handleDelete = async (id) => {
-    const data = await axiosInstance.delete(`api/answer/${id}`);
+    const data = await axiosInstance.delete(`api/answer/${id}`, {
+      baseURL: "/",
+    });
 
     return data;
   };
@@ -56,7 +58,7 @@ function AskWithId() {
                           file={ans.gistFile}
                         />
 
-                        {session.user.id === ans.authorId ? (
+                        {session?.user?.id === ans?.authorId ? (
                           <button
                             onClick={() => handleDelete(ans.id)}
                             className="btn round"
