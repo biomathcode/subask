@@ -123,7 +123,7 @@ export default function Home() {
         </div>
 
         {data.map((el) => {
-          const timestamp = el.createdAt ? new Date(el.createdAt) : "";
+          const timestamp = el.createdAt ? new Date(el.createdAt) : null;
           return (
             <Card key={el.id}>
               <Link href={"/ask/" + el.id}>
@@ -152,7 +152,8 @@ export default function Home() {
                         }}
                       />
                       <p>
-                        {el.author.name} asked {format(timestamp, "dd-MM-yyyy")}
+                        {el.author.name} asked{" "}
+                        {timestamp && format(timestamp, "dd-MM-yyyy")}
                       </p>
                     </div>
                   </div>
