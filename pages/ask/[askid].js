@@ -1,10 +1,10 @@
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Gist from "react-gist";
 import { Loader } from "../../components/Icons";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
+import axiosInstance from "../../components/axios";
 
 function AskWithId() {
   const [ask, setAsk] = useState();
@@ -17,7 +17,9 @@ function AskWithId() {
 
   useEffect(() => {
     const fetchAsk = async () => {
-      const result = await axios.get("https://subask.in/api/ask/" + askid);
+      const result = await axiosInstance("api/ask/" + askid, {
+        baseURL: "/",
+      });
 
       setAsk(result.data.data);
     };
@@ -26,7 +28,7 @@ function AskWithId() {
   }, [askid]);
 
   const handleDelete = async (id) => {
-    const data = await axios.delete(`https://subask.in/api/answer/${id}`);
+    const data = await axiosInstance.delete(`api/answer/${id}`);
 
     return data;
   };

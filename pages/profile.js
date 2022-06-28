@@ -1,6 +1,5 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useEffect } from "react";
 function Profile() {
   const { data: session } = useSession();
 

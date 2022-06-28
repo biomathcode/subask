@@ -4,9 +4,9 @@ import { violet, blackA, mauve, green } from "@radix-ui/colors";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import Select from "react-select";
-import axios from "axios";
 import { signIn, useSession } from "next-auth/react";
 import useSWR from "swr";
+import axiosInstance from "../axios";
 
 const overlayShow = keyframes({
   "0%": { opacity: 0 },
@@ -168,7 +168,7 @@ const Input = styled("input", {
 });
 const fetchGists = async () => {
   try {
-    const result = await axios.get("/api/gists");
+    const result = await axiosInstance.get("/api/gists");
 
     const newData = await result.data.data.data.flatMap((el) => {
       const files = Object.values(el.files);

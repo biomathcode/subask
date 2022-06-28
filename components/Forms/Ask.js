@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import axiosInstance from "../axios";
 
 function AskComponent() {
   const [value, setValue] = useState("");
@@ -15,7 +16,7 @@ function AskComponent() {
 
   useEffect(() => {
     const fetchTags = async () => {
-      const result = await axios.get("/api/tags");
+      const result = await axiosInstance.get("/api/tags");
 
       const newData = await result.data.data.map((el) => {
         return {

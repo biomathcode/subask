@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 import Select from "react-select";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import Gist from "react-gist";
+import axiosInstance from "../axios";
 
 function GistComponent() {
   const { data: session } = useSession();
@@ -11,9 +11,7 @@ function GistComponent() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get("/api/gists");
-
-      console.log(result.data.data);
+      const result = await axiosInstance.get("/api/gists");
 
       setGists(result.data.data.data);
     };
@@ -37,7 +35,6 @@ function GistComponent() {
               </div>
             );
           })}
-        {/* <Select onChange={(e) => console.log(e)} isMulti options={tags} /> */}
       </div>
     )
   );

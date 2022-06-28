@@ -1,16 +1,15 @@
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { Loader } from "../components/Icons";
-import axios from "axios";
 
 import { format, formatDistance, parseISO } from "date-fns";
 import DialogDemo from "../components/UI/Dialogs";
 import Link from "next/link";
 import useSWR from "swr";
 import { styled } from "@stitches/react";
+import axiosInstance from "../components/axios";
 
 const Card = styled("div", {
   width: "400px",
@@ -28,12 +27,12 @@ const Card = styled("div", {
 });
 
 const fetchData = async () => {
-  const result = await axios.get("/api/ask");
+  const result = await axiosInstance.get("/api/ask");
 
   return result.data.data;
 };
 const fetchTags = async () => {
-  const result = await axios.get("/api/tags");
+  const result = await axiosInstance.get("/api/tags");
 
   return result.data.data;
 };

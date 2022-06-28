@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Head from "next/head";
 import AskComponent from "../../components/Forms/Ask";
-import { Loader } from "../../components/Icons";
 
 function Ask() {
   return (
