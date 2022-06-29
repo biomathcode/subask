@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import Select from "react-select";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import axiosInstance from "../axios";
 
@@ -31,8 +30,26 @@ function AskComponent() {
     fetchTags();
   }, []);
 
-  const handleAsk = () => {
-    const askInput = value;
+  const handleAsk = async () => {
+    if (value === "") {
+      return alert("input is empty...");
+    }
+
+    console.log(select);
+
+    console.log(value);
+
+    const askResponse = await axiosInstance.post("/api/ask", {
+      content: value,
+      email: session.user.email,
+      tags: {
+        id: Number(select.value),
+      },
+    });
+
+    if (askResponse) {
+      alert("Successfully submitted your Ask.");
+    }
   };
 
   return (
@@ -85,13 +102,15 @@ function AskComponent() {
               placeholder="Choose a tag"
               value={select}
               name="tags"
-              onChange={(v) => (v.length <= 2 ? setSelect(v) : null)}
+              onChange={(v) => setSelect(v)}
               options={tags}
             />
           </div>
 
           <div className="flex jc center mt-10">
-            <button className="btn round">Ask</button>
+            <button onClick={() => handleAsk()} className="btn round">
+              Ask
+            </button>
           </div>
         </div>
       )}

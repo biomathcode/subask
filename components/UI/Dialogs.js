@@ -210,7 +210,7 @@ const DialogDemo = ({ askid }) => {
     if (!session) {
       return alert("Please login ");
     }
-    const response = await axios.post("/api/answer", {
+    const response = await axiosInstance.post("/api/answer", {
       gistId: files.value,
       gistFile: files.label,
       askid,
