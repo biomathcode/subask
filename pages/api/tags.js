@@ -18,11 +18,13 @@ export default async function handler(req, res) {
       const tags = await prisma.tag.findMany({});
       return res.status(200).json({ data: tags });
     case "POST":
+      const name = req.body.name;
       const data = await prisma.tag.create({
         data: {
           name: name,
         },
       });
+
       return res.status(200).json({
         data: data,
       });

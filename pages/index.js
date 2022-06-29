@@ -57,13 +57,11 @@ const Tags = () => {
 
   return (
     <div className="flex gap-10 h-scroll ">
-      {data.map((el, i) => {
+      {data.map((el) => {
         return (
-          <>
-            <div className="tag" key={i}>
-              {el.name}
-            </div>
-          </>
+          <div className="tag" key={el.id}>
+            {el.name}
+          </div>
         );
       })}
     </div>
