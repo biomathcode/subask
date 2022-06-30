@@ -54,7 +54,7 @@ function AskWithId() {
                       <div key={ans.id}>
                         <Gist id={ans?.gistId} file={ans?.gistFile} />
 
-                        {session?.user?.id === ans?.authorId ? (
+                        {session && session?.user?.id === ans.authorId ? (
                           <button
                             onClick={() => handleDelete(ans.id)}
                             className="btn round"

@@ -12,6 +12,7 @@ export default async function handler(req, res) {
         select: {
           authorId: true,
           answers: true,
+
           content: true,
           id: true,
           author: true,
