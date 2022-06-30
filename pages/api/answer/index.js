@@ -21,9 +21,9 @@ export default async function handler(req, res) {
           author: true,
           authorId: true,
           gistFile: true,
+          gistId: true,
           id: true,
           askid: true,
-          answerTo: true,
         },
       });
       return res.status(200).json({ data: response });

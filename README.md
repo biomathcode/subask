@@ -6,9 +6,9 @@ Features
 - Any one can answer a question as long as the gist id provided is unique
 - 
 TODO
-[ ] Work on Authentication flow
-[ ] Make Profile Page
-[ ] Ask pages with Blog 
-[ ] Move from useEffect and useState for fetching to swr, and react query
+[x] Work on Authentication flow
+[x] Make Profile Page
+[x] Ask pages with Blog 
+[x] Move from useEffect and useState for fetching to swr, and react query
 
 - The Master-Detail Pattern is used to display 

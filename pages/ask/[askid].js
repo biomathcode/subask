@@ -52,11 +52,7 @@ function AskWithId() {
                   ask.answers.map((ans) => {
                     return (
                       <div key={ans.id}>
-                        <Gist
-                          key={ans.gistId}
-                          id={ans.gistId}
-                          file={ans.gistFile}
-                        />
+                        <Gist id={ans?.gistId} file={ans?.gistFile} />
 
                         {session?.user?.id === ans?.authorId ? (
                           <button
