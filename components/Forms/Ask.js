@@ -54,6 +54,8 @@ function AskComponent() {
 
     if (askResponse) {
       alert("Successfully submitted your Ask.");
+      setValue("");
+      setSelect("");
     }
   };
 
