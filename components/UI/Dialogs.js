@@ -22,6 +22,8 @@ const StyledOverlay = styled(DialogPrimitive.Overlay, {
   backgroundColor: blackA.blackA9,
   position: "fixed",
   inset: 0,
+  zIndex: "10",
+
   "@media (prefers-reduced-motion: no-preference)": {
     animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
   },
@@ -38,6 +40,7 @@ const StyledContent = styled(DialogPrimitive.Content, {
   transform: "translate(-50%, -50%)",
   width: "90vw",
   maxWidth: "450px",
+  zIndex: "10",
   maxHeight: "85vh",
   padding: 25,
   "@media (prefers-reduced-motion: no-preference)": {
@@ -173,6 +176,8 @@ const fetchGists = async () => {
     const newData = await result.data.data.data.flatMap((el) => {
       const files = Object.values(el.files);
 
+      // TODO: Add a validation for the public gists
+
       return files.map((data, i) => {
         return {
           value: el.id + " " + i,
@@ -228,7 +233,7 @@ const DialogDemo = ({ askid }) => {
       <DialogContent>
         <DialogTitle>Answer</DialogTitle>
         <DialogDescription>
-          Choose the Gist which answers the questions.
+          Choose the Gist which answers the questions.(*Gist should be public)
         </DialogDescription>
         <Flex css={{ margin: "25px 0px", justifyContent: "flex-end" }}>
           <a href="https://gist.github.com" rel="noreferrer" target={"_blank"}>

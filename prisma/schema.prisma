@@ -68,7 +68,7 @@ model Ask {
 
   author   User     @relation(fields: [authorId], references: [id])
   authorId String
-  tags     Tag[]    @relation(references: [id])
+  tags     Tag[]
   answers  Answer[]
 }
 
@@ -87,5 +87,5 @@ model Answer {
 model Tag {
   id   Int    @id @default(autoincrement())
   name String
-  asks Ask[]  @relation(references: [id])
+  asks Ask[]
 }

@@ -3,14 +3,35 @@ import prisma from "../../../lib/prisma";
 export default async function handler(req, res) {
   switch (req.method) {
     case "GET":
-      const data = await prisma.ask.findMany({
-        include: {
-          answers: true,
-          tags: true,
-          author: true,
-        },
-      });
-      return res.status(200).json({ data: data });
+      const { tag } = req.query;
+
+      if (tag === "all") {
+        const data = await prisma.ask.findMany({
+          include: {
+            answers: true,
+            tags: true,
+            author: true,
+          },
+        });
+        return res.status(200).json({ data: data });
+      } else {
+        const data = await prisma.ask.findMany({
+          where: {
+            tags: {
+              every: {
+                name: tag,
+              },
+            },
+          },
+          include: {
+            answers: true,
+            tags: true,
+            author: true,
+          },
+        });
+        return res.status(200).json({ data: data });
+      }
+
     case "POST":
       const content = req.body.content;
 

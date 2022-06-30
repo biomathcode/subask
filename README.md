@@ -11,4 +11,22 @@ TODO
 [x] Ask pages with Blog 
 [x] Move from useEffect and useState for fetching to swr, and react query
 
+[ ] Add Pagination 
+[ ] Add tags based query
+[ ] Design and UI/UX
+[ ] Mobile responsive
+
+
+ERRORS 
+ - Delete Button not working properly
+ - Update and Delete questions
+ - null question validation
+ - Disable ask question if not logged in 
+ - Gist render error in production
+
+
+Upcoming Features
+ - Votes 
+ - Email notifications
+
 - The Master-Detail Pattern is used to display 

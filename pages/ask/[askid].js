@@ -41,17 +41,29 @@ function AskWithId() {
         <meta name="description" content={"answer to " + ask?.content} />
       </Head>
       <div className="container  flex jc ">
-        <div className="main jc flux  ">
+        <div className="main jc   ">
           {ask ? (
-            <div className="flex column">
-              <h1>{ask.content}</h1>
+            <div
+              className="flex column center jc"
+              style={{
+                textAlign: "center",
+              }}
+            >
+              <h2>{ask.content}</h2>
               <p>posted by {ask.author.name}</p>
 
               <div>
                 {ask.answers !== [] &&
                   ask.answers.map((ans) => {
                     return (
-                      <div key={ans.id}>
+                      <div
+                        key={ans.id}
+                        style={{
+                          minWidth: "350px",
+                          width: "50vw",
+                          maxWidth: "750px",
+                        }}
+                      >
                         <Gist id={ans?.gistId} file={ans?.gistFile} />
 
                         {session && session?.user?.id === ans.authorId ? (
