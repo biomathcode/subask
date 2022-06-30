@@ -36,6 +36,10 @@ function AskComponent() {
       return alert("input is empty...");
     }
 
+    if (select === null || select === undefined || select === []) {
+      return alert("Please choose a Tag ");
+    }
+
     console.log(select);
 
     console.log(value);

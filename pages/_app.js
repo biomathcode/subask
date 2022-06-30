@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Navbar from "../components/UI/Navbar";
 import AskButton from "../components/UI/AskButton";
+import { RecoilRoot } from "recoil";
 
 const queryClient = new QueryClient();
 
@@ -13,11 +14,13 @@ export default function App({
 }) {
   return (
     <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient}>
-        <Navbar />
-        <AskButton />
-        <Component {...pageProps} />
-      </QueryClientProvider>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <Navbar />
+          <AskButton />
+          <Component {...pageProps} />
+        </QueryClientProvider>
+      </RecoilRoot>
     </SessionProvider>
   );
 }

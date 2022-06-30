@@ -19,28 +19,28 @@ function CreateTag() {
 
   const [loading, setLoading] = useState(false);
 
-  const handleTags = async () => {
-    setLoading(true);
-    if (input !== "") {
-      const response = await axiosInstance.post("/api/tags", {
-        name: input,
-      });
-      if (response) {
-        alert(`input by the name ${response.data?.data.name} is created `);
-        console.log(response);
+  // const handleTags = async () => {
+  //   setLoading(true);
+  //   if (input !== "") {
+  //     const response = await axiosInstance.post("/api/tags", {
+  //       name: input,
+  //     });
+  //     if (response) {
+  //       alert(`input by the name ${response.data?.data.name} is created `);
+  //       console.log(response);
 
-        setInput("");
-        setLoading(false);
-      } else {
-        setLoading(false);
-        alert("Something went wrong!!! ");
-      }
-    } else {
-      setLoading(false);
+  //       setInput("");
+  //       setLoading(false);
+  //     } else {
+  //       setLoading(false);
+  //       alert("Something went wrong!!! ");
+  //     }
+  //   } else {
+  //     setLoading(false);
 
-      alert("Input can not be empty...");
-    }
-  };
+  //     alert("Input can not be empty...");
+  //   }
+  // };
   return (
     <div className="container flex jc ">
       <div className="main ">
@@ -55,7 +55,7 @@ function CreateTag() {
             placeholder="tag value"
           />
           <button
-            onClick={() => handleTags()}
+            // onClick={() => handleTags()}
             className="btn round flex center"
           >
             {loading ? <LoaderIcon /> : <PlusIcon />}

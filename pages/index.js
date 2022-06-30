@@ -10,6 +10,8 @@ import Link from "next/link";
 import useSWR from "swr";
 import { styled } from "@stitches/react";
 import axiosInstance from "../components/axios";
+import { useRecoilState, useRecoilValue } from "recoil";
+import SelectTag from "../lib/store";
 
 const Card = styled("div", {
   width: "400px",
@@ -66,10 +68,13 @@ const fetchTags = async (data) => {
   return result.data.data;
 };
 
-const Tags = ({ selTag, setTag }) => {
+const Tags = () => {
   const { data, error } = useSWR("api/tags", fetchTags);
+
+  const [selTag, setSelTag] = useRecoilState(SelectTag);
+
   const handleSelect = (el) => {
-    setTag(el);
+    setSelTag(el);
   };
   if (error) {
     return (
@@ -112,10 +117,8 @@ const Tags = ({ selTag, setTag }) => {
 
 export default function Home() {
   const { data: session } = useSession();
-  const [selTag, setSelTag] = useState({
-    id: 0,
-    name: "all",
-  });
+
+  const selTag = useRecoilValue(SelectTag);
 
   const { data, error } = useSWR(
     () => `/api/ask?tag=${selTag.name}`,
@@ -167,7 +170,7 @@ export default function Home() {
             background: "white",
           }}
         >
-          <Tags selTag={selTag} setTag={setSelTag} />
+          <Tags />
         </div>
 
         <div className="flex center column jc">

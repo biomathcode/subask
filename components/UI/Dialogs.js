@@ -173,10 +173,14 @@ const fetchGists = async () => {
   try {
     const result = await axiosInstance.get("/api/gists");
 
-    const newData = await result.data.data.data.flatMap((el) => {
-      const files = Object.values(el.files);
+    const files = await result.data.data.data;
 
-      // TODO: Add a validation for the public gists
+    const publicFiles = await files.filter((e) => {
+      return e.public === true;
+    });
+
+    const newData = await publicFiles.flatMap((el) => {
+      const files = Object.values(el.files);
 
       return files.map((data, i) => {
         return {
@@ -222,6 +226,10 @@ const DialogDemo = ({ askid }) => {
       authorId: session.user.id,
     });
 
+    if (response) {
+      return alert("You answer is Posted!!!");
+    }
+
     console.log(response);
   };
 
@@ -233,7 +241,7 @@ const DialogDemo = ({ askid }) => {
       <DialogContent>
         <DialogTitle>Answer</DialogTitle>
         <DialogDescription>
-          Choose the Gist which answers the questions.(*Gist should be public)
+          Choose the Gist which answers the questions.(* Gist should be public)
         </DialogDescription>
         <Flex css={{ margin: "25px 0px", justifyContent: "flex-end" }}>
           <a href="https://gist.github.com" rel="noreferrer" target={"_blank"}>
