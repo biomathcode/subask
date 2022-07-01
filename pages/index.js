@@ -116,6 +116,33 @@ const Tags = () => {
 };
 
 export default function Home() {
+  return (
+    <div className="container flex jc  center ">
+      <Head>
+        <title>Subask: Where Developers Ask and Answer</title>
+        <meta name="description" content="ask and answer" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className="main ">
+        <div
+          className="scroll-container mt-main"
+          style={{
+            position: "sticky",
+            top: "60px",
+            background: "white",
+
+            zIndex: "10000",
+          }}
+        >
+          <Tags />
+        </div>
+        <Scroll />
+      </div>
+    </div>
+  );
+}
+
+function Scroll() {
   const { data: session } = useSession();
 
   const selTag = useRecoilValue(SelectTag);
@@ -154,88 +181,67 @@ export default function Home() {
   console.log(data);
 
   return (
-    <div className="container flex jc  center ">
-      <Head>
-        <title>Subask: Where Developers Ask and Answer</title>
-        <meta name="description" content="ask and answer" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <div className="main ">
-        <div
-          className="scroll-container mt-main"
-          style={{
-            position: "sticky",
-            top: "60px",
-            background: "white",
-          }}
-        >
-          <Tags />
-        </div>
-
-        <div className="flex center column jc">
-          {data.length === 0 ? (
-            <p className="flex center">
-              No Ask Found <br /> Create a new ask by click on the bottom left
-              button.
-            </p>
-          ) : (
-            data.map((el) => {
-              const timestamp = el.createdAt ? new Date(el.createdAt) : null;
-              return (
-                <Card key={el.id}>
-                  <Link href={"/ask/" + el.id}>
+    <div className="flex center column jc">
+      {data.length === 0 ? (
+        <p className="flex center">
+          No Ask Found <br /> Create a new ask by click on the bottom left
+          button.
+        </p>
+      ) : (
+        data.map((el) => {
+          const timestamp = el.createdAt ? new Date(el.createdAt) : null;
+          return (
+            <Card key={el.id}>
+              <Link href={"/ask/" + el.id}>
+                <div>
+                  <div
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "1.30769231rem",
+                      color: "var(--text-color)",
+                    }}
+                  >
+                    {el.content}
+                  </div>
+                  <div
+                    className="flex js center"
+                    style={{ color: "#555", fontSize: "14px" }}
+                  >
                     <div>
-                      <div
-                        style={{
-                          cursor: "pointer",
-                          fontSize: "1.30769231rem",
-                          color: "var(--text-color)",
-                        }}
-                      >
-                        {el.content}
-                      </div>
-                      <div
-                        className="flex js center"
-                        style={{ color: "#555", fontSize: "14px" }}
-                      >
-                        <div>
-                          {el.answers && el.answers.length > 1
-                            ? el.answers?.length + " answers"
-                            : el.answers?.length + " answer"}
-                        </div>
-                        <div className="flex center">
-                          <img
-                            src={el.author?.image}
-                            width="20px"
-                            height="20px"
-                            style={{
-                              borderRadius: "50%",
-                            }}
-                          />
-                          <p>
-                            {el.author?.name} asked{" "}
-                            {timestamp &&
-                              formatDistance(timestamp, Date.now(), {
-                                addSuffix: true,
-                              })}
-                          </p>
-                        </div>
-                      </div>
+                      {el.answers && el.answers.length > 1
+                        ? el.answers?.length + " answers"
+                        : el.answers?.length + " answer"}
                     </div>
-                  </Link>
-
-                  <div className="flex js">
                     <div className="flex center">
-                      <DialogDemo askid={el.id} />
+                      <img
+                        src={el.author?.image}
+                        width="20px"
+                        height="20px"
+                        style={{
+                          borderRadius: "50%",
+                        }}
+                      />
+                      <p>
+                        {el.author?.name} asked{" "}
+                        {timestamp &&
+                          formatDistance(timestamp, Date.now(), {
+                            addSuffix: true,
+                          })}
+                      </p>
                     </div>
                   </div>
-                </Card>
-              );
-            })
-          )}
-        </div>
-      </div>
+                </div>
+              </Link>
+
+              <div className="flex js">
+                <div className="flex center">
+                  <DialogDemo askid={el.id} />
+                </div>
+              </div>
+            </Card>
+          );
+        })
+      )}
     </div>
   );
 }
