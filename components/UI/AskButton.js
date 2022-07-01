@@ -1,11 +1,10 @@
 // floating button that redirects to the ask page
 
 import { styled } from "@stitches/react";
-import Link from "next/link";
 
 const FloatingButton = styled("a", {
   position: "fixed",
-  bottom: "50px",
+  bottom: "55px",
   right: "50px",
   fontSize: "16px",
   padding: "5px",
@@ -21,6 +20,7 @@ const FloatingButton = styled("a", {
   alignItems: "center",
   justifyContent: "center",
   verticalAlign: "center",
+  zIndex: Infinity,
   "&:hover": {
     backgroundColor: "#333",
     color: "#eee",
