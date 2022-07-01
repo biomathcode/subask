@@ -7,7 +7,10 @@ const FooterContainer = styled("footer", {
   justifyContent: "center",
   alignItems: "center",
   gap: "10px",
-  zIndex: "1000",
+  zIndex: 10000000,
+  background: "#fff",
+  position: "fixed",
+  bottom: "0px",
 });
 
 function Footer() {

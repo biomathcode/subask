@@ -95,6 +95,7 @@ const Button = styled("button", {
   lineHeight: 1,
   fontWeight: 500,
   height: 35,
+  zIndex: "10",
 
   variants: {
     variant: {
