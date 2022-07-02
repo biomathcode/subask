@@ -183,8 +183,6 @@ function Scroll() {
       </div>
     );
 
-  console.log(data);
-
   return (
     <div className="flex center column jc" style={{ marginBottom: "100px" }}>
       {data.length === 0 ? (
@@ -238,7 +236,11 @@ function Scroll() {
                 </div>
               </Link>
 
-              <div className="flex js" style={{ justifyContent: "flex-end" }}>
+              <div
+                className="flex js"
+                style={{ justifyContent: "space-between" }}
+              >
+                <Tag>{el.tags[0].name}</Tag>
                 <div className="flex ">
                   <DialogDemo askid={el.id} />
                 </div>
