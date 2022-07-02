@@ -82,7 +82,6 @@ export const DialogClose = DialogPrimitive.Close;
 
 // Your app...
 const Flex = styled("div", { display: "flex" });
-const Box = styled("div", {});
 
 const Button = styled("button", {
   all: "unset",
@@ -90,11 +89,11 @@ const Button = styled("button", {
   alignItems: "center",
   justifyContent: "center",
   borderRadius: 4,
-  padding: "0 15px",
-  fontSize: 15,
+  padding: "0 10px",
+  fontSize: 12,
   lineHeight: 1,
   fontWeight: 500,
-  height: 35,
+  height: 25,
   zIndex: "10",
 
   variants: {
@@ -237,7 +236,7 @@ const DialogDemo = ({ askid }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="large">Answer</Button>
+        <Button>Answer</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>Answer</DialogTitle>

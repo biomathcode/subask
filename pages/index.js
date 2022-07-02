@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { useSession, signIn } from "next-auth/react";
-import { memo, useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 
 import { Loader } from "../components/Icons";
 
-import { format, formatDistance } from "date-fns";
+import { formatDistance } from "date-fns";
 import DialogDemo from "../components/UI/Dialogs";
 import Link from "next/link";
 import useSWR from "swr";
@@ -15,12 +15,15 @@ import SelectTag from "../lib/store";
 
 const Card = styled("div", {
   width: "400px",
+  minWidth: "300px",
+  maxWidth: "400px",
   zIndex: 1,
   marginBottom: "10px",
   padding: "20px 20px",
   display: "flex",
   flexDirection: "column",
   borderRadius: "10px",
+  fontSize: "16px",
   gap: "2px",
   cursor: "pointer",
   transition: "all ease-in 100ms",
@@ -30,7 +33,7 @@ const Card = styled("div", {
 });
 
 const Tag = styled("div", {
-  padding: "4px 14px",
+  padding: "4px 10px",
   background: "#eaeade",
   borderRadius: "20px",
   cursor: "pointer",
@@ -41,6 +44,7 @@ const Tag = styled("div", {
   color: "#333",
   transition: "all ease-in 100ms",
   fontWeight: "600",
+  fontSize: "12px",
 
   variants: {
     selected: {
@@ -198,7 +202,7 @@ function Scroll() {
                   <div
                     style={{
                       cursor: "pointer",
-                      fontSize: "1.30769231rem",
+                      fontSize: "18px",
                       color: "var(--text-color)",
                     }}
                   >
@@ -206,7 +210,7 @@ function Scroll() {
                   </div>
                   <div
                     className="flex js center"
-                    style={{ color: "#555", fontSize: "14px" }}
+                    style={{ color: "#555", fontSize: "12px" }}
                   >
                     <div>
                       {el.answers && el.answers.length > 1
@@ -234,8 +238,8 @@ function Scroll() {
                 </div>
               </Link>
 
-              <div className="flex js">
-                <div className="flex center">
+              <div className="flex js" style={{ justifyContent: "flex-end" }}>
+                <div className="flex ">
                   <DialogDemo askid={el.id} />
                 </div>
               </div>

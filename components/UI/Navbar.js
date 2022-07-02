@@ -10,7 +10,7 @@ const Container = styled("nav", {
   justifyContent: "space-around",
   alignItems: "center",
   alignContent: "center",
-  height: "50px",
+  height: "40px",
   width: "100vw",
   position: "fixed",
   background: "#fff",
@@ -19,7 +19,8 @@ const Container = styled("nav", {
 
 const Item = styled("div", {
   fontWeight: "bold",
-  color: "#040404",
+
+  color: "#333",
   cursor: "pointer",
 });
 
@@ -29,19 +30,26 @@ const Navbar = () => {
     <>
       <Container>
         <Link href="/">
-          <Item>subask.in</Item>
+          <Item>SubAsk</Item>
         </Link>
         {session ? (
           <Link href="/profile">
             <div className="flex center ">
               <img
-                width="25px"
-                height="25px"
+                width="20px"
+                height="20px"
                 style={{ borderRadius: "50%" }}
                 src={session.user.image}
                 alt={session.user.email}
               />
-              <p>{session.user.name}</p>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#4b4b4b",
+                }}
+              >
+                {session.user.name}
+              </p>
             </div>
           </Link>
         ) : (
