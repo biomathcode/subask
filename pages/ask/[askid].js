@@ -49,8 +49,32 @@ function AskWithId() {
                 textAlign: "center",
               }}
             >
-              <h2>{ask.content}</h2>
-              <p>posted by {ask.author.name}</p>
+              <h1
+                style={{
+                  fontWeight: 500,
+                  wordSpacing: 1,
+                  fontSize: "1.8rem",
+                  color: "#111",
+                  fontFamily: "sans-serif",
+                }}
+              >
+                {ask.content}
+              </h1>
+              <div className="flex center">
+                <p>posted by</p>
+
+                <div className="center flex">
+                  <img
+                    src={ask.author?.image}
+                    width="20px"
+                    height="20px"
+                    style={{
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <p>{ask.author.name}</p>
+                </div>
+              </div>
 
               <div style={{ marginBottom: "100px" }}>
                 {ask.answers !== [] &&
@@ -64,9 +88,10 @@ function AskWithId() {
                           maxWidth: "750px",
                         }}
                       >
+                        <p>{console.log(ans)}</p>
                         <Gist id={ans?.gistId} file={ans?.gistFile} />
 
-                        {session && session?.user?.id === ans.authorId ? (
+                        {session.user.id === ans.authorId ? (
                           <button
                             onClick={() => handleDelete(ans.id)}
                             className="btn round"

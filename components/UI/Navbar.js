@@ -6,14 +6,15 @@ const Container = styled("nav", {
   display: "flex",
   fontFamily: "sans-serif",
   flexDirection: "row",
-  borderBottom: "1px solid #eee",
+  borderBottom: "2px solid #eee",
   justifyContent: "space-around",
   alignItems: "center",
   alignContent: "center",
-  height: "40px",
+  height: "50px",
   width: "100vw",
   position: "fixed",
-  background: "#fff",
+  // background: "#fff",
+  backdropFilter: "blur(8px)",
   zIndex: 1000,
 });
 
