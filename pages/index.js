@@ -23,6 +23,7 @@ const Card = styled("div", {
   borderRadius: "10px",
   gap: "2px",
   cursor: "pointer",
+  transition: "all ease-in 100ms",
   "&:hover": {
     background: "#eee",
   },
@@ -131,7 +132,7 @@ export default function Home() {
             top: "60px",
             background: "white",
 
-            zIndex: "10000",
+            zIndex: "4",
           }}
         >
           <Tags />
@@ -181,7 +182,7 @@ function Scroll() {
   console.log(data);
 
   return (
-    <div className="flex center column jc">
+    <div className="flex center column jc" style={{ marginBottom: "100px" }}>
       {data.length === 0 ? (
         <p className="flex center">
           No Ask Found <br /> Create a new ask by click on the bottom left

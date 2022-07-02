@@ -35,8 +35,8 @@ const Navbar = () => {
           <Link href="/profile">
             <div className="flex center ">
               <img
-                width="40px"
-                height="40px"
+                width="25px"
+                height="25px"
                 style={{ borderRadius: "50%" }}
                 src={session.user.image}
                 alt={session.user.email}

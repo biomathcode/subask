@@ -41,7 +41,7 @@ function AskWithId() {
         <meta name="description" content={"answer to " + ask?.content} />
       </Head>
       <div className="container  flex jc ">
-        <div className="main jc   ">
+        <div className="main jc   " style={{ marginBottom: "100px" }}>
           {ask ? (
             <div
               className="flex column center jc"
@@ -52,7 +52,7 @@ function AskWithId() {
               <h2>{ask.content}</h2>
               <p>posted by {ask.author.name}</p>
 
-              <div>
+              <div style={{ marginBottom: "100px" }}>
                 {ask.answers !== [] &&
                   ask.answers.map((ans) => {
                     return (

@@ -21,11 +21,15 @@ TODO
 [x] Make Profile Page
 [x] Ask pages with Blog 
 [x] Move from useEffect and useState for fetching to swr, and react query
+[x] Add tags based query
+[x] Mobile responsive
+
+
 
 [ ] Add Pagination 
-[ ] Add tags based query
+[ ] Filter and Sorting
+[ ] 
 [ ] Design and UI/UX
-[ ] Mobile responsive
 
 
 ERRORS 
